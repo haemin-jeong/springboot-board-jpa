@@ -1,0 +1,33 @@
+= 게시판 API 가이드
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+== 전체 게시글 조회
+
+전체 게시글을 조회할 수 있으며, 요청 파라미터를 통해 페이징 조회도 가능합니다.
+
+operation::find-posts[snippets='http-request,request-parameters,response-fields,http-response']
+
+== 게시글 단건 조회
+
+PostId를 통해 게시글 단건 조회를 할 수 있습니다.
+
+operation::find-post[snippets='http-request,path-parameters,response-fields,http-response']
+
+== 게시글 저장
+
+게시글을 저장할 수 있습니다.
+
+operation::save-post[snippets='http-request,request-fields,response-fields,http-response']
+
+== 게시글 수정
+
+게시글을 수정할 수 있습니다.
+
+operation::update-post[snippets='http-request,path-parameters,request-fields,response-fields,http-response']
