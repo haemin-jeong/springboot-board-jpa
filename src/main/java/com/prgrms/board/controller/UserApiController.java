@@ -20,17 +20,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserApiController {
 
     private final UserService userService;
-    private final UserConverter userConverter;
 
     @PostMapping(value = "/users/v1", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<SaveResponse> save(@Valid @RequestBody UserCreateRequest request) {
         Long savedId = userService.registerUser(request.getName(), request.getAge(), request.getHobby());
-        return new ResponseEntity<>(userConverter.convertToSaveResponse(savedId), HttpStatus.CREATED);
+        return new ResponseEntity<>(UserConverter.convertToSaveResponse(savedId), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/users/v1/{userId}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResponse> findById(@PathVariable Long userId) {
         User findUser = userService.findUserById(userId);
-        return ResponseEntity.ok(userConverter.convertToUserResponse(findUser));
+        return ResponseEntity.ok(UserConverter.convertToUserResponse(findUser));
     }
 }
