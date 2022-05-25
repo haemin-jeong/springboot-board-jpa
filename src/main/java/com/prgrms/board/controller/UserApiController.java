@@ -22,7 +22,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping(value = "/users/v1", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<SaveResponse> save(@Valid @RequestBody UserCreateRequest request) {
+    public ResponseEntity<SaveResponse> save(@RequestBody @Valid UserCreateRequest request) {
         Long savedId = userService.registerUser(request.getName(), request.getAge(), request.getHobby());
         return new ResponseEntity<>(UserConverter.convertToSaveResponse(savedId), HttpStatus.CREATED);
     }

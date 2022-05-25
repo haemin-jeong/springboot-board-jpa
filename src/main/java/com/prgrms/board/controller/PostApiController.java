@@ -22,7 +22,7 @@ public class PostApiController {
     private final PostService postService;
 
     @GetMapping(value = "/posts/v1", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<PageResponse> list(Pageable pageable) {
+    public ResponseEntity<PageResponse<PostResponse>> list(Pageable pageable) {
         Page<Post> posts = postService.findPosts(pageable);
         return ResponseEntity.ok(PostConverter.convertToPostResponsePage(posts));
     }
@@ -35,13 +35,13 @@ public class PostApiController {
     }
 
     @PostMapping(value = "/posts/v1", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<SaveResponse> save(@Valid @RequestBody PostRequest request) {
+    public ResponseEntity<SaveResponse> save(@RequestBody @Valid PostRequest request) {
         Long savedPostId = postService.addPost(request.getUserId(), request.getTitle(), request.getContent());
         return new ResponseEntity<>(PostConverter.convertToSaveResponse(savedPostId), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/posts/v1/{postId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<SaveResponse> update(@Valid @RequestBody PostUpdateRequest updateRequest, @PathVariable Long postId) {
+    public ResponseEntity<SaveResponse> update(@PathVariable Long postId, @RequestBody @Valid PostUpdateRequest updateRequest) {
         postService.updatePost(postId,  updateRequest.getTitle(), updateRequest.getContent());
         return ResponseEntity.ok(PostConverter.convertToSaveResponse(postId));
     }
