@@ -83,7 +83,7 @@ class PostServiceImplTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 postId의 게시글을 수정하려하면 IllegalArgumentException 예외가 발생한다.")
+    @DisplayName("존재하지 않는 postId의 게시글을 수정하려하면 NotFoundException 예외가 발생한다.")
     void updatePostInvalidPostIdTest() {
         // Given
         Long invalidPostId = -1L;
@@ -94,9 +94,6 @@ class PostServiceImplTest {
                 .isExactlyInstanceOf(NotFoundException.class);
         verify(postRepository).findById(invalidPostId);
     }
-
-    //TODO findPosts 테스트
-
 
     @Test
     @DisplayName("ID로 Post를 조회한다.")
@@ -115,7 +112,7 @@ class PostServiceImplTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 postId로 Post를 조회하면 IllegalArgumentException이 발생한다.")
+    @DisplayName("존재하지 않는 postId로 Post를 조회하면 NotFoundException이 발생한다.")
     void findPostByInvalidIdTest() {
         // Given
         Long invalidPostId = -1L;

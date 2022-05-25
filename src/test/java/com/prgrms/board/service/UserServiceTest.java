@@ -59,7 +59,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 userId로 User를 조회하면 IllegalArgumentExceptino이 발생한다.")
+    @DisplayName("존재하지 않는 userId로 User를 조회하면 NotFoundException이 발생한다.")
     void findByInvalidIdTest() {
         // Given
         Long invalidId = -1L;
