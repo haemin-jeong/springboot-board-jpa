@@ -10,8 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,6 +97,37 @@ class PostServiceImplTest {
         assertThatThrownBy(() -> postService.updatePost(invalidPostId, "updateTitle", "updateContent"))
                 .isExactlyInstanceOf(NotFoundException.class);
         verify(postRepository).findById(invalidPostId);
+    }
+
+    @Test
+    @DisplayName("게시글을 페이징 조회한다.")
+    void findPostsTest() {
+        // Given
+        User user1 = createUser(1L);
+        User user2 = createUser(2L);
+
+        Post post1 = createPost(1L, user1);
+        Post post2 = createPost(2L, user1);
+        Post post3 = createPost(3L, user2);
+        Post post4 = createPost(4L, user2);
+
+        List<Post> posts = List.of(post1, post2, post3, post4);
+
+        PageRequest pageRequest = PageRequest.of(0, 2);
+
+        PageImpl<Post> page = new PageImpl<>(posts, pageRequest, 4);
+
+        when(postRepository.findAll(pageRequest)).thenReturn(page);
+
+        // When
+        Page<Post> findPosts = postService.findPosts(pageRequest);
+
+        // Then
+        verify(postRepository).findAll(pageRequest);
+        assertThat(findPosts.getNumber()).isEqualTo(0);
+        assertThat(findPosts.getSize()).isEqualTo(2);
+        assertThat(findPosts.getTotalPages()).isEqualTo(2);
+        assertThat(findPosts.getTotalElements()).isEqualTo(4);
     }
 
     @Test
