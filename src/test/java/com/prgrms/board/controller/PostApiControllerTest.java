@@ -76,7 +76,8 @@ class PostApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description(MediaType.APPLICATION_JSON_VALUE)
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 게시글의 ID")
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("생성된 게시글의 ID")
                         )
                 ));
     }
@@ -122,23 +123,24 @@ class PostApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description(MediaType.APPLICATION_JSON_VALUE)
                         ),
                         responseFields(
-                                fieldWithPath("contents[]").type(JsonFieldType.ARRAY).description("게시글 리스트"),
-                                fieldWithPath("contents[].id").type(JsonFieldType.NUMBER).description("게시글 ID"),
-                                fieldWithPath("contents[].title").type(JsonFieldType.STRING).description("게시글 제목"),
-                                fieldWithPath("contents[].content").type(JsonFieldType.STRING).description("게시글 본문"),
-                                fieldWithPath("contents[].user").type(JsonFieldType.OBJECT).description("게시글을 작성한 User"),
-                                fieldWithPath("contents[].user.id").type(JsonFieldType.NUMBER).description("게시글을 작성한 User의 ID"),
-                                fieldWithPath("contents[].user.name").type(JsonFieldType.STRING).description("게시글을 작성한 User의 이름"),
-                                fieldWithPath("contents[].user.age").type(JsonFieldType.NUMBER).description("게시글을 작성한 User의 나이"),
-                                fieldWithPath("contents[].user.hobby").type(JsonFieldType.STRING).description("게시글을 작성한 User의 취미"),
-                                fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이징 관련 정보"),
-                                fieldWithPath("pageInfo.totalElementCount").type(JsonFieldType.NUMBER).description("전체 게시글 개수"),
-                                fieldWithPath("pageInfo.totalPageCount").type(JsonFieldType.NUMBER).description("전체 페이지 개수"),
-                                fieldWithPath("pageInfo.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
-                                fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("현재 페이지의 게시글 개수"),
-                                fieldWithPath("pageInfo.isFirstPage").type(JsonFieldType.BOOLEAN).description("현재 페이지가 첫번째 페이지인지 확인"),
-                                fieldWithPath("pageInfo.hasNextPage").type(JsonFieldType.BOOLEAN).description("현재 페이지의 다음 페이지가 존재하는지 확인"),
-                                fieldWithPath("pageInfo.hasPrevPage").type(JsonFieldType.BOOLEAN).description("현재 페이지의 이전 페이지가 존재하는지 확인")
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTP 상태 코드"),
+                                fieldWithPath("data.contents[]").type(JsonFieldType.ARRAY).description("게시글 리스트"),
+                                fieldWithPath("data.contents[].id").type(JsonFieldType.NUMBER).description("게시글 ID"),
+                                fieldWithPath("data.contents[].title").type(JsonFieldType.STRING).description("게시글 제목"),
+                                fieldWithPath("data.contents[].content").type(JsonFieldType.STRING).description("게시글 본문"),
+                                fieldWithPath("data.contents[].user").type(JsonFieldType.OBJECT).description("게시글을 작성한 User"),
+                                fieldWithPath("data.contents[].user.id").type(JsonFieldType.NUMBER).description("게시글을 작성한 User의 ID"),
+                                fieldWithPath("data.contents[].user.name").type(JsonFieldType.STRING).description("게시글을 작성한 User의 이름"),
+                                fieldWithPath("data.contents[].user.age").type(JsonFieldType.NUMBER).description("게시글을 작성한 User의 나이"),
+                                fieldWithPath("data.contents[].user.hobby").type(JsonFieldType.STRING).description("게시글을 작성한 User의 취미"),
+                                fieldWithPath("data.pageInfo").type(JsonFieldType.OBJECT).description("페이징 관련 정보"),
+                                fieldWithPath("data.pageInfo.totalElementCount").type(JsonFieldType.NUMBER).description("전체 게시글 개수"),
+                                fieldWithPath("data.pageInfo.totalPageCount").type(JsonFieldType.NUMBER).description("전체 페이지 개수"),
+                                fieldWithPath("data.pageInfo.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
+                                fieldWithPath("data.pageInfo.size").type(JsonFieldType.NUMBER).description("현재 페이지의 게시글 개수"),
+                                fieldWithPath("data.pageInfo.isFirstPage").type(JsonFieldType.BOOLEAN).description("현재 페이지가 첫번째 페이지인지 확인"),
+                                fieldWithPath("data.pageInfo.hasNextPage").type(JsonFieldType.BOOLEAN).description("현재 페이지의 다음 페이지가 존재하는지 확인"),
+                                fieldWithPath("data.pageInfo.hasPrevPage").type(JsonFieldType.BOOLEAN).description("현재 페이지의 이전 페이지가 존재하는지 확인")
                         )
                 ));
 
@@ -169,14 +171,15 @@ class PostApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description(MediaType.APPLICATION_JSON_VALUE)
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("게시글 ID"),
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("게시글 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 본문"),
-                                fieldWithPath("user").type(JsonFieldType.OBJECT).description("게시글 작성 User 정보"),
-                                fieldWithPath("user.id").type(JsonFieldType.NUMBER).description("게시글 작성 User ID"),
-                                fieldWithPath("user.name").type(JsonFieldType.STRING).description("게시글 작성 User 이름"),
-                                fieldWithPath("user.age").type(JsonFieldType.NUMBER).description("게시글 작성 User 나이"),
-                                fieldWithPath("user.hobby").type(JsonFieldType.STRING).description("게시글 작성 User 취미(없는 경우 Null)")
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("게시글 ID"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING).description("게시글 제목"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING).description("게시글 본문"),
+                                fieldWithPath("data.user").type(JsonFieldType.OBJECT).description("게시글 작성 User 정보"),
+                                fieldWithPath("data.user.id").type(JsonFieldType.NUMBER).description("게시글 작성 User ID"),
+                                fieldWithPath("data.user.name").type(JsonFieldType.STRING).description("게시글 작성 User 이름"),
+                                fieldWithPath("data.user.age").type(JsonFieldType.NUMBER).description("게시글 작성 User 나이"),
+                                fieldWithPath("data.user.hobby").type(JsonFieldType.STRING).description("게시글 작성 User 취미(없는 경우 Null)")
                         )
                     )
                 );
@@ -234,7 +237,8 @@ class PostApiControllerTest {
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 본문")
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("업데이트된 게시글의 ID")
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("업데이트된 게시글의 ID")
                         )
                     )
                 );

@@ -13,12 +13,12 @@ public class PostConverter {
         return new SaveResponse(postId);
     }
 
-    public static PageResponse<PostResponse> convertToPostResponsePage(Page<Post> page) {
+    public static PostListResponse convertToPostResponsePage(Page<Post> page) {
         List<PostResponse> postResponses = page.getContent().stream()
                 .map(PostConverter::convertToPostResponse)
                 .collect(Collectors.toList());
         PageInfo pageInfo = PageInfo.from(page);
-        return new PageResponse<>(postResponses, pageInfo);
+        return new PostListResponse(postResponses, pageInfo);
     }
 
     public static PostResponse convertToPostResponse(Post post) {

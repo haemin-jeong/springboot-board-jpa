@@ -7,8 +7,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class PageResponse<T> {
+public class PostListResponse {
 
-    private List<T> contents;
+    private List<PostResponse> contents;
     private PageInfo pageInfo;
 }
